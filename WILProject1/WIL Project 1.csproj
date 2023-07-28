@@ -24,9 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DAL">
-      <HintPath>..\DAL\obj\Debug\net7.0\ref\DAL.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
