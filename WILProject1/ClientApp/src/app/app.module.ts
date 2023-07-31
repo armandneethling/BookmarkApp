@@ -14,7 +14,7 @@ import { AddEditComponent } from './add-edit/add-edit.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    AddEditComponent
+    AddEditComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

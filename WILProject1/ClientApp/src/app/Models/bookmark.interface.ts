@@ -4,4 +4,6 @@ export interface Bookmark {
   category: string;
   language: string;
   dateAdded: Date;
+  keywords: string;
+  url: string;
 }

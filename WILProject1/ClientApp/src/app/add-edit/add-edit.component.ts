@@ -5,16 +5,19 @@ import { BookmarkService } from '../Services/bookmark.service';
 
 @Component({
   selector: 'app-add-edit',
-  templateUrl: './app-edit.component.html',
-  styleUrls: ['./app-edit.component.css']
+  templateUrl: './add-edit.component.html',
+  styleUrls: ['./add-edit.component.css']
 })
+
 export class AddEditComponent {
   bookmark: Bookmark = {
     id: 0,
     name: '',
     category: '',
     language: '',
-    dateAdded: new Date()
+    dateAdded: new Date(),
+    keywords: '',
+    url: ''
   };
 
   constructor(
@@ -25,9 +28,17 @@ export class AddEditComponent {
 
   onSubmit(form: any): void {
     if (form.valid) {
-      this.bookmarkService.addBookmark(this.bookmark);
-      form.reset();
+      this.bookmarkService.addBookmark(this.bookmark).subscribe(
+        (newBookmark: Bookmark) => {
+          console.log('Bookmark added successfully:', newBookmark);
+          form.reset();
+
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Error adding bookmark:', error);
+        }
+      );
     }
   }
 }
-
