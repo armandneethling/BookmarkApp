@@ -6,6 +6,7 @@ namespace DAL
     {
         public BookmarkContext(DbContextOptions<BookmarkContext> options) : base(options)
         {
+
         }
 
         public DbSet<Bookmark> Bookmarks { get; set; }
@@ -17,11 +18,14 @@ namespace DAL
     public class Bookmark
     {
         public int BookmarkID { get; set; }
-        public string Name { get; set; }
-        public int CategoryID { get; set; }
-        public int LanguageID { get; set; }
+        public string BookmarkName { get; set; }
+        public string CategoryID { get; set; }
+        public string LanguageID { get; set; }
         public DateTime BookmarkDateAdded { get; set; } = DateTime.Now;
+        public string Url { get; set; }
+        public string Keywords { get; set; }
     }
+
 
     public class Language
     {

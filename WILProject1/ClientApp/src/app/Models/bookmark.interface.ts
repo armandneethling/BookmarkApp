@@ -1,9 +1,9 @@
 export interface Bookmark {
-  id: number;
-  name: string;
-  category: string;
-  language: string;
-  dateAdded: Date;
+  bookmarkID: number;
+  bookmarkName: string;
+  categoryID: string;
+  languageID: string;
+  bookmarkDateAdded: Date;
   keywords: string;
   url: string;
 }

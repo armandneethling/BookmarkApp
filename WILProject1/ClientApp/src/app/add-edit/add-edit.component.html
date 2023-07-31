@@ -5,7 +5,7 @@
   <form #bookmarkForm="ngForm" (ngSubmit)="onSubmit(bookmarkForm)">
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
-      <input type="text" id="name" class="form-control" name="name" required [(ngModel)]="bookmark.name">
+      <input type="text" id="name" class="form-control" name="name" required [(ngModel)]="bookmark.bookmarkName">
     </div>
 
     <div class="mb-3">
@@ -15,7 +15,7 @@
 
     <div class="mb-3">
       <label for="category" class="form-label">Category:</label>
-      <select id="category" class="form-select" name="category" required [(ngModel)]="bookmark.category">
+      <select id="category" class="form-select" name="category" required [(ngModel)]="bookmark.categoryID">
         <option value="" disabled selected>Select Category</option>
         <option value="category1">Category 1</option>
         <option value="category2">Category 2</option>
@@ -24,7 +24,7 @@
 
     <div class="mb-3">
       <label for="language" class="form-label">Language:</label>
-      <select id="language" class="form-select" name="language" required [(ngModel)]="bookmark.language">
+      <select id="language" class="form-select" name="language" required [(ngModel)]="bookmark.languageID">
         <option value="" disabled selected>Select Language</option>
         <option value="language1">Language 1</option>
         <option value="language2">Language 2</option>

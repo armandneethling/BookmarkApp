@@ -20,6 +20,7 @@ export class BookmarkService {
   }
 
   deleteBookmark(bookmarkId: number): Observable<any> {
+    console.log('Delete bookmark called with ID:', bookmarkId);
     const url = `${this.baseUrl}/${bookmarkId}`;
     return this.http.delete(url);
   }

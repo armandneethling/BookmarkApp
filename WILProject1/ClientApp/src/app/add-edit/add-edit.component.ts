@@ -11,11 +11,11 @@ import { BookmarkService } from '../Services/bookmark.service';
 
 export class AddEditComponent {
   bookmark: Bookmark = {
-    id: 0,
-    name: '',
-    category: '',
-    language: '',
-    dateAdded: new Date(),
+    bookmarkID: 0,
+    bookmarkName: '',
+    categoryID: '',
+    languageID: '',
+    bookmarkDateAdded: new Date(),
     keywords: '',
     url: ''
   };
@@ -28,6 +28,7 @@ export class AddEditComponent {
 
   onSubmit(form: any): void {
     if (form.valid) {
+      console.log(this.bookmark)
       this.bookmarkService.addBookmark(this.bookmark).subscribe(
         (newBookmark: Bookmark) => {
           console.log('Bookmark added successfully:', newBookmark);
