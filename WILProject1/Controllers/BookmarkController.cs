@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System;
 using DAL;
 
 namespace WIL_Project_1.Controllers
@@ -20,79 +18,128 @@ namespace WIL_Project_1.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Bookmark>> Get()
         {
-            var bookmarks = _context.Bookmarks;
-            return Ok(bookmarks);
+            try
+            {
+                var bookmarks = _context.Bookmarks;
+                return Ok(bookmarks);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error while retrieving bookmarks: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        // GET: api/bookmark
+        // GET: api/bookmark/{id}
         [HttpGet("{id}")]
         public ActionResult GetbyID(int id)
         {
-            var bookmark = _context.Bookmarks.Find(id);
-            return Ok(bookmark);
+            try
+            {
+                var bookmark = _context.Bookmarks.Find(id);
+                if (bookmark == null)
+                {
+                    return NotFound();
+                }
+                return Ok(bookmark);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error while retrieving bookmark with ID {id}: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         // POST: api/bookmark
         [HttpPost]
         public IActionResult AddBookmark([FromBody] Bookmark bookmark)
         {
-            Console.WriteLine($"Received bookmark: {bookmark.BookmarkName}, Category: {bookmark.CategoryID}, Language: {bookmark.LanguageID}, URL: {bookmark.Url}, Keywords: {bookmark.Keywords}");
-            if (ModelState.IsValid)
+            try
             {
-                _context.Bookmarks.Add(bookmark);
-                _context.SaveChanges();
-                return Ok(bookmark);
-            }
-
-            // Log the ModelState errors
-            foreach (var modelStateEntry in ModelState.Values)
-            {
-                foreach (var error in modelStateEntry.Errors)
+                Console.WriteLine($"Received bookmark: {bookmark.BookmarkName}, Category: {bookmark.CategoryID}, Language: {bookmark.LanguageID}, URL: {bookmark.Url}, Keywords: {bookmark.Keywords}");
+                if (ModelState.IsValid)
                 {
-                    // Log the error message
-                    Console.WriteLine(error.ErrorMessage);
+                    _context.Bookmarks.Add(bookmark);
+                    _context.SaveChanges();
+                    return Ok(bookmark);
                 }
-            }
 
-            return BadRequest(ModelState);
+                // Log the ModelState errors
+                foreach (var modelStateEntry in ModelState.Values)
+                {
+                    foreach (var error in modelStateEntry.Errors)
+                    {
+                        // Log the error message
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
+
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error while adding a bookmark: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         // DELETE: api/bookmark/{id}
         [HttpDelete("{id}")]
         public IActionResult DeleteBookmark(int id)
         {
-            var bookmark = _context.Bookmarks.Find(id);
-            if (bookmark == null)
+            try
             {
-                return NotFound();
+                var bookmark = _context.Bookmarks.Find(id);
+                if (bookmark == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Bookmarks.Remove(bookmark);
+                _context.SaveChanges();
+
+                return Ok(bookmark);
             }
-
-            _context.Bookmarks.Remove(bookmark);
-            _context.SaveChanges();
-
-            return Ok(bookmark);
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error while deleting bookmark with ID {id}: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         // PUT: api/bookmark/{id}
         [HttpPut("{id}")]
         public IActionResult UpdateBookmark(int id, [FromBody] Bookmark bookmark)
         {
-            var existingBookmark = _context.Bookmarks.Find(id);
-            if (existingBookmark == null)
+            try
             {
-                return NotFound();
+                var existingBookmark = _context.Bookmarks.Find(id);
+                if (existingBookmark == null)
+                {
+                    return NotFound();
+                }
+
+                existingBookmark.BookmarkName = bookmark.BookmarkName;
+                existingBookmark.CategoryID = bookmark.CategoryID;
+                existingBookmark.LanguageID = bookmark.LanguageID;
+                existingBookmark.Url = bookmark.Url;
+                existingBookmark.Keywords = bookmark.Keywords;
+
+                _context.Bookmarks.Update(existingBookmark);
+                _context.SaveChanges();
+
+                return Ok(existingBookmark);
             }
-
-            existingBookmark.BookmarkName = bookmark.BookmarkName;
-            existingBookmark.CategoryID = bookmark.CategoryID;
-            existingBookmark.LanguageID = bookmark.LanguageID;
-            existingBookmark.Url = bookmark.Url;
-            existingBookmark.Keywords = bookmark.Keywords;
-
-            _context.Bookmarks.Update(existingBookmark);
-            _context.SaveChanges();
-
-            return Ok(existingBookmark);
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error while updating bookmark with ID {id}: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
     }
 }
