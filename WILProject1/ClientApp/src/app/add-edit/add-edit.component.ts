@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Bookmark } from '../Models/bookmark.interface';
 import { BookmarkService } from '../Services/bookmark.service';
 
@@ -10,6 +11,7 @@ import { BookmarkService } from '../Services/bookmark.service';
 })
 export class AddEditComponent implements OnInit {
   isEditing: boolean = false;
+  bookmarkForm!: FormGroup;
   bookmark: Bookmark = {
     bookmarkID: 0,
     bookmarkName: '',
@@ -23,6 +25,7 @@ export class AddEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookmarkService: BookmarkService,
+    private formBuilder: FormBuilder,
     private editRouter: Router
   ) { }
 
@@ -37,13 +40,25 @@ export class AddEditComponent implements OnInit {
         this.isEditing = false;
       }
     });
+
+    this.initForm();
+  }
+
+  initForm() {
+    this.bookmarkForm = this.formBuilder.group({
+      bookmarkName: ['', Validators.required],
+      categoryID: ['', Validators.required],
+      languageID: ['', Validators.required],
+      url: ['', Validators.required],
+      keywords: ['', Validators.required]
+    });
   }
 
   getBookmark(bookmarkID: number): void {
     this.bookmarkService.getBookmark(bookmarkID).subscribe(
       (bookmark: Bookmark) => {
         this.bookmark = bookmark;
-        console.log(bookmark)
+        this.bookmarkForm.patchValue(bookmark);
       },
       (error) => {
         console.error('Error fetching bookmark:', error);
@@ -51,21 +66,25 @@ export class AddEditComponent implements OnInit {
     );
   }
 
-  onSubmit(form: any): void {
-    if (form.valid) {
+  onSubmit(): void {
+    console.log('Form values:', this.bookmarkForm.value);
+    if (this.bookmarkForm.valid) {
+      console.log('Form is valid.');
       if (this.isEditing) {
-        this.updateBookmark(form);
+        this.updateBookmark();
       } else {
-        this.addBookmark(form);
+        this.addBookmark();
       }
+    } else {
+      console.log('Form is invalid.');
     }
   }
 
-  addBookmark(form: any): void {
-    this.bookmarkService.addBookmark(this.bookmark).subscribe(
-      (newBookmark: Bookmark) => {
-        console.log('Bookmark added successfully:', newBookmark);
-        form.reset();
+  addBookmark(): void {
+    this.bookmarkService.addBookmark(this.bookmarkForm.value).subscribe(
+      (createdBookmark: Bookmark) => {
+        console.log('Bookmark added successfully:', createdBookmark);
+        this.bookmarkForm.reset();
         this.editRouter.navigate(['/']);
       },
       (error) => {
@@ -74,11 +93,11 @@ export class AddEditComponent implements OnInit {
     );
   }
 
-  updateBookmark(form: any): void {
-    this.bookmarkService.updateBookmark(this.bookmark).subscribe(
-      (updatedBookmark: Bookmark) => {
-        console.log('Bookmark updated successfully:', updatedBookmark);
-        form.reset();
+  updateBookmark(): void {
+    const updatedBookmark: Bookmark = { ...this.bookmark, ...this.bookmarkForm.value };
+    this.bookmarkService.updateBookmark(updatedBookmark).subscribe(
+      (bookmark: Bookmark) => {
+        console.log('Bookmark updated successfully:', bookmark);
         this.editRouter.navigate(['/']);
       },
       (error) => {
