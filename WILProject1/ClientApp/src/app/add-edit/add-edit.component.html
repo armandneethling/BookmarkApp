@@ -17,8 +17,9 @@
       <label for="category" class="form-label">Category:</label>
       <select id="category" class="form-select" name="category" required [(ngModel)]="bookmark.categoryID">
         <option value="" disabled selected>Select Category</option>
-        <option value="category1">Category 1</option>
-        <option value="category2">Category 2</option>
+        <option value="category1">Frontend</option>
+        <option value="category2">Backend</option>
+        <option value="category3">Full stack</option>
       </select>
     </div>
 
@@ -26,8 +27,16 @@
       <label for="language" class="form-label">Language:</label>
       <select id="language" class="form-select" name="language" required [(ngModel)]="bookmark.languageID">
         <option value="" disabled selected>Select Language</option>
-        <option value="language1">Language 1</option>
-        <option value="language2">Language 2</option>
+        <option value="language1">C#</option>
+        <option value="language2">Java</option>
+        <option value="language3">Angular</option>
+        <option value="language4">ASP.NET</option>
+        <option value="language5">React</option>
+        <option value="language6">Python</option>
+        <option value="language7">HTML</option>
+        <option value="language8">CSS</option>
+        <option value="language9">Javascript</option>
+        <option value="language10">SQL</option>
       </select>
     </div>
 
@@ -36,6 +45,6 @@
       <input type="text" id="keywords" class="form-control" name="keywords" required [(ngModel)]="bookmark.keywords">
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-success">Submit</button>
   </form>
 </div>
