@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System;
 using DAL;
 
 namespace WIL_Project_1.Controllers
@@ -25,9 +27,7 @@ namespace WIL_Project_1.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Console.WriteLine($"Error while retrieving bookmarks: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing your request.");
+                throw new Exception(ex.Message);
             }
         }
 
@@ -46,9 +46,7 @@ namespace WIL_Project_1.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Console.WriteLine($"Error while retrieving bookmark with ID {id}: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing your request.");
+                throw new Exception(ex.Message);
             }
         }
 
@@ -80,9 +78,7 @@ namespace WIL_Project_1.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Console.WriteLine($"Error while adding a bookmark: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing your request.");
+                throw new Exception(ex.Message);
             }
         }
 
@@ -105,9 +101,7 @@ namespace WIL_Project_1.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Console.WriteLine($"Error while deleting bookmark with ID {id}: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing your request.");
+                throw new Exception(ex.Message);
             }
         }
 
@@ -136,9 +130,7 @@ namespace WIL_Project_1.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Console.WriteLine($"Error while updating bookmark with ID {id}: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing your request.");
+                throw new Exception(ex.Message);
             }
         }
     }

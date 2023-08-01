@@ -1,31 +1,40 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Add Bootstrap CSS link here (as you provided in the original code) -->
 
 <div class="container mt-4">
   <h2>{{ isEditing ? 'Edit' : 'Add' }} Bookmark</h2>
   <form #bookmarkForm="ngForm" (ngSubmit)="onSubmit(bookmarkForm)">
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
-      <input type="text" id="name" class="form-control" name="name" required [(ngModel)]="bookmark.bookmarkName">
+      <input type="text" id="name" class="form-control" name="name" required [(ngModel)]="bookmark.bookmarkName" #name="ngModel">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+        <div *ngIf="name.errors.required">Name is required.</div>
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="url" class="form-label">URL:</label>
-      <input type="text" id="url" class="form-control" name="url" required [(ngModel)]="bookmark.url">
+      <input type="text" id="url" class="form-control" name="url" required [(ngModel)]="bookmark.url" #url="ngModel">
+      <div *ngIf="url.invalid && (url.dirty || url.touched)" class="text-danger">
+        <div *ngIf="url.errors.required">URL is required.</div>
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="category" class="form-label">Category:</label>
-      <select id="category" class="form-select" name="category" required [(ngModel)]="bookmark.categoryID">
+      <select id="category" class="form-select" name="category" required [(ngModel)]="bookmark.categoryID" #category="ngModel">
         <option value="" disabled selected>Select Category</option>
         <option value="category1">Frontend</option>
         <option value="category2">Backend</option>
         <option value="category3">Full stack</option>
       </select>
+      <div *ngIf="category.invalid && (category.dirty || category.touched)" class="text-danger">
+        <div *ngIf="category.errors.required">Category is required.</div>
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="language" class="form-label">Language:</label>
-      <select id="language" class="form-select" name="language" required [(ngModel)]="bookmark.languageID">
+      <select id="language" class="form-select" name="language" required [(ngModel)]="bookmark.languageID" #language="ngModel">
         <option value="" disabled selected>Select Language</option>
         <option value="language1">C#</option>
         <option value="language2">Java</option>
@@ -38,11 +47,17 @@
         <option value="language9">Javascript</option>
         <option value="language10">SQL</option>
       </select>
+      <div *ngIf="language.invalid && (language.dirty || language.touched)" class="text-danger">
+        <div *ngIf="language.errors.required">Language is required.</div>
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="keywords" class="form-label">Keywords (separated by comma):</label>
-      <input type="text" id="keywords" class="form-control" name="keywords" required [(ngModel)]="bookmark.keywords">
+      <input type="text" id="keywords" class="form-control" name="keywords" required [(ngModel)]="bookmark.keywords" #keywords="ngModel">
+      <div *ngIf="keywords.invalid && (keywords.dirty || keywords.touched)" class="text-danger">
+        <div *ngIf="keywords.errors.required">Keywords are required.</div>
+      </div>
     </div>
 
     <button *ngIf="isEditing" type="button" class="btn btn-success" (click)="updateBookmark(bookmarkForm)">Update</button>
