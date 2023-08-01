@@ -6,7 +6,7 @@ using DAL;
 namespace WIL_Project_1.Controllers
 {
     [ApiController]
-    [Route("api/bookmark")]
+    [Route("api/[controller]")]
     public class BookmarkController : ControllerBase
     {
         private readonly BookmarkContext _context;
@@ -63,6 +63,30 @@ namespace WIL_Project_1.Controllers
             _context.SaveChanges();
 
             return Ok(bookmark);
+        }
+
+        // PUT: api/bookmark/{id}
+        [HttpPut("{id}")]
+        public IActionResult EditBookmark(int id, [FromBody] Bookmark bookmark)
+        {
+            var existingBookmark = _context.Bookmarks.Find(id);
+            if (existingBookmark == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the existing bookmark with the new values
+            existingBookmark.BookmarkName = bookmark.BookmarkName;
+            existingBookmark.CategoryID = bookmark.CategoryID;
+            existingBookmark.LanguageID = bookmark.LanguageID;
+            existingBookmark.Url = bookmark.Url;
+            existingBookmark.Keywords = bookmark.Keywords;
+            // You can add more properties as needed
+
+            _context.Bookmarks.Update(existingBookmark);
+            _context.SaveChanges();
+
+            return Ok(existingBookmark);
         }
     }
 }

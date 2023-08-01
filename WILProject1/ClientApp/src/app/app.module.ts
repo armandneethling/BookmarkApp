@@ -23,6 +23,7 @@ import { AddEditComponent } from './add-edit/add-edit.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'add-edit', component: AddEditComponent },
+      { path: 'add-edit/:id', component: AddEditComponent }
     ])
   ],
   providers: [],

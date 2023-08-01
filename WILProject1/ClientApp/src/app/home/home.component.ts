@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Bookmark } from '../Models/bookmark.interface';
 import { BookmarkService } from '../Services/bookmark.service';
 
@@ -10,7 +11,10 @@ import { BookmarkService } from '../Services/bookmark.service';
 export class HomeComponent implements OnInit {
   bookmarks: Bookmark[] = [];
 
-  constructor(private bookmarkService: BookmarkService) { }
+  constructor(
+    private bookmarkService: BookmarkService,
+    private homeRouter: Router
+  ) { }
 
   ngOnInit(): void {
     this.fetchBookmarks();
@@ -38,5 +42,9 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  editBookmark(bookmarkID: number): void {
+    this.homeRouter.navigate(['/add-edit', bookmarkID]);
   }
 }
