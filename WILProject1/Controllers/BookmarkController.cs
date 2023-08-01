@@ -24,6 +24,14 @@ namespace WIL_Project_1.Controllers
             return Ok(bookmarks);
         }
 
+        // GET: api/bookmark
+        [HttpGet("{id}")]
+        public ActionResult GetbyID(int id)
+        {
+            var bookmark = _context.Bookmarks.Find(id);
+            return Ok(bookmark);
+        }
+
         // POST: api/bookmark
         [HttpPost]
         public IActionResult AddBookmark([FromBody] Bookmark bookmark)
@@ -67,7 +75,7 @@ namespace WIL_Project_1.Controllers
 
         // PUT: api/bookmark/{id}
         [HttpPut("{id}")]
-        public IActionResult EditBookmark(int id, [FromBody] Bookmark bookmark)
+        public IActionResult UpdateBookmark(int id, [FromBody] Bookmark bookmark)
         {
             var existingBookmark = _context.Bookmarks.Find(id);
             if (existingBookmark == null)
@@ -75,13 +83,11 @@ namespace WIL_Project_1.Controllers
                 return NotFound();
             }
 
-            // Update the properties of the existing bookmark with the new values
             existingBookmark.BookmarkName = bookmark.BookmarkName;
             existingBookmark.CategoryID = bookmark.CategoryID;
             existingBookmark.LanguageID = bookmark.LanguageID;
             existingBookmark.Url = bookmark.Url;
             existingBookmark.Keywords = bookmark.Keywords;
-            // You can add more properties as needed
 
             _context.Bookmarks.Update(existingBookmark);
             _context.SaveChanges();

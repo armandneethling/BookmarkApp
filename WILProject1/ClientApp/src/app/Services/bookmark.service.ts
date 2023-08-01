@@ -17,8 +17,9 @@ export class BookmarkService {
     return this.http.get<Bookmark[]>(url);
   }
 
-  getBookmark(bookmarkId: number): Observable<Bookmark> {
-    const url = `${this.baseUrl}/${bookmarkId}`;
+  getBookmark(bookmarkID: number): Observable<Bookmark> {
+    const url = `${this.baseUrl}/${bookmarkID}`;
+    console.log('Fetching bookmark with ID:', bookmarkID);
     return this.http.get<Bookmark>(url);
   }
 
@@ -31,9 +32,9 @@ export class BookmarkService {
     return this.http.put<Bookmark>(url, bookmark);
   }
 
-  deleteBookmark(bookmarkId: number): Observable<any> {
-    console.log('Delete bookmark called with ID:', bookmarkId);
-    const url = `${this.baseUrl}/${bookmarkId}`;
+  deleteBookmark(bookmarkID: number): Observable<any> {
+    console.log('Delete bookmark called with ID:', bookmarkID);
+    const url = `${this.baseUrl}/${bookmarkID}`;
     return this.http.delete(url);
   }
 }
