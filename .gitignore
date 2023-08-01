@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /WILProject1/ClientApp/.angular/cache/15.1.6/babel-webpack
+/WILProject1/ClientApp/.angular
