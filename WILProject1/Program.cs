@@ -7,14 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
 });
 
 // Register DbContext with configuration options

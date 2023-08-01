@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
   }
 
   deleteBookmark(bookmarkId: number): void {
-    console.log('Deleting bookmark with ID:', bookmarkId);
     this.bookmarkService.deleteBookmark(bookmarkId).subscribe(
       () => {
         this.fetchBookmarks();

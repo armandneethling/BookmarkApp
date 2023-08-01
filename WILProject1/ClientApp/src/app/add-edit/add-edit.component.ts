@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Bookmark } from '../Models/bookmark.interface';
 import { BookmarkService } from '../Services/bookmark.service';
 
@@ -9,30 +9,30 @@ import { BookmarkService } from '../Services/bookmark.service';
   styleUrls: ['./add-edit.component.css']
 })
 export class AddEditComponent implements OnInit {
+  isEditing: boolean = false;
   bookmark: Bookmark = {
     bookmarkID: 0,
     bookmarkName: '',
     categoryID: '',
     languageID: '',
     bookmarkDateAdded: new Date(),
-    keywords: '',
-    url: ''
+    url: '',
+    keywords: ''
   };
 
-  isEditing: boolean = false;
-
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private bookmarkService: BookmarkService
+    private route: ActivatedRoute,
+    private bookmarkService: BookmarkService,
+    private editRouter: Router
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      const bookmarkID = +params['id'];
-      if (!isNaN(bookmarkID)) {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const bookmarkID = params.get('id');
+      if (bookmarkID !== null) {
+        const id = +bookmarkID;
         this.isEditing = true;
-        this.getBookmark(bookmarkID);
+        this.getBookmark(id);
       } else {
         this.isEditing = false;
       }
@@ -66,7 +66,7 @@ export class AddEditComponent implements OnInit {
       (newBookmark: Bookmark) => {
         console.log('Bookmark added successfully:', newBookmark);
         form.reset();
-        this.router.navigate(['/']);
+        this.editRouter.navigate(['/']);
       },
       (error) => {
         console.error('Error adding bookmark:', error);
@@ -79,7 +79,7 @@ export class AddEditComponent implements OnInit {
       (updatedBookmark: Bookmark) => {
         console.log('Bookmark updated successfully:', updatedBookmark);
         form.reset();
-        this.router.navigate(['/']);
+        this.editRouter.navigate(['/']);
       },
       (error) => {
         console.error('Error updating bookmark:', error);
